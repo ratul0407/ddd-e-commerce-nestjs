@@ -1,6 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { CreateProductDto } from './dtos/create-product.dto.js';
-import { ProductResponseDto } from './dtos/product-response.dto.js';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateProductCommand } from '../application/use-cases/create-product/create-product.command.js';
 
@@ -12,10 +11,10 @@ export class ProductsController {
     await this.commandBus.execute(
       new CreateProductCommand(
         dto.name,
-        dto.currency || 'USD',
         dto.description,
-        dto.price,
         dto.sku,
+        dto.price,
+        dto.currency || 'USD',
         dto.stock,
       ),
     );

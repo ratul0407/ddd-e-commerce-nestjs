@@ -1,5 +1,5 @@
 export class Sku {
-  private static readonly SKU_PATTERN = /^[A-za-z0-9-]+s/;
+  private static readonly SKU_PATTERN = /^[A-Za-z0-9-]+$/;
 
   private static readonly MIN_LENGTH = 3;
 
@@ -12,6 +12,7 @@ export class Sku {
   }
 
   static create(value: string): Sku {
+    console.log(value, 'from line 15 in sku.vo.ts');
     const trimmed = value.trim();
     if (trimmed.length < Sku.MIN_LENGTH || trimmed.length > Sku.MAX_LENGTH) {
       throw new Error(

@@ -7,8 +7,8 @@ export interface ProductProps {
   id: ProductId;
   name: string;
   description: string;
-  price: Money;
   sku: Sku;
+  price: Money;
   stock: number;
   isActive: boolean;
   lowStockThreshold: number;
@@ -43,7 +43,8 @@ export class Product extends AggregateRoot {
     name: string,
     description: string,
     sku: string,
-    price: Money,
+    price: number,
+    currency: string,
     stock: number,
   ) {
     Product.validateName(name);
@@ -54,7 +55,7 @@ export class Product extends AggregateRoot {
       name,
       description,
       sku: Sku.create(sku),
-      price,
+      price: Money.create(price, currency),
       stock,
       isActive: true,
       lowStockThreshold: 5,
@@ -97,12 +98,12 @@ export class Product extends AggregateRoot {
     return new Product(props);
   }
   private static validateName(name: string): void {
-    if (name.length > 2) {
+    if (name.length < 2) {
       throw new Error('Product Name must be at least 2 characters');
     }
   }
   private static validateStock(stock: number): void {
-    if (stock > 0) {
+    if (stock < 0) {
       throw new Error('Stock cannot be negative');
     }
   }
