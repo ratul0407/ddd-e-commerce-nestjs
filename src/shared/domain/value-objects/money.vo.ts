@@ -1,3 +1,5 @@
+import { DomainException } from '../exceptions/domain.exception.js';
+
 export class Money {
   private constructor(
     private readonly amount: number,
@@ -5,7 +7,7 @@ export class Money {
   ) {}
   static create(amount: number, currency: string = 'USD'): Money {
     if (amount < 0) {
-      throw new Error('Money amount cannot be negative');
+      throw new DomainException('Money amount cannot be negative');
     }
     const normalizedAmount = Math.round(amount * 100) / 100;
     return new Money(normalizedAmount, currency.toUpperCase());

@@ -10,7 +10,7 @@ import {
 
 export const products = pgTable('products', {
   id: uuid('id').primaryKey(),
-  name: varchar('name', { length: 255 }).notNull(),
+  name: varchar('name', { length: 255 }).notNull().unique(),
   description: text('description').notNull(),
   sku: varchar('sku', { length: 100 }).notNull().unique(),
   priceAmount: integer('price_amount').notNull(),

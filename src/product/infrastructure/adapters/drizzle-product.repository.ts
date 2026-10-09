@@ -97,4 +97,24 @@ export class DrizzleProductRepository implements ProductRepository {
       updatedAt: row.updatedAt,
     });
   }
+  async findBySku(sku: Sku): Promise<Product | null> {
+    const rows = await this.db
+      .select()
+      .from(products)
+      .where(eq(products.sku, sku.getValue()));
+    if (rows.length == 0) {
+      return null;
+    }
+    return DrizzleProductRepository.toDomain(rows[0]);
+  }
+  async findByName(name: string): Promise<Product | null> {
+    const rows = await this.db
+      .select()
+      .from(products)
+      .where(eq(products.name, name));
+    if (rows.length == 0) {
+      return null;
+    }
+    return DrizzleProductRepository.toDomain(rows[0]);
+  }
 }
